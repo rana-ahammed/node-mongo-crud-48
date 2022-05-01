@@ -29,13 +29,25 @@
       const container = document.getElementById('products');
       products.forEach(pd => {
         const p = document.createElement('p');
-        p.innerHTML = `<strong> ${pd.name} </strong> -- Price: ${pd.price} Quantity: ${pd.quantity}`;
+        p.innerHTML = `<strong> ${pd.name} </strong> -- Price: ${pd.price} Quantity: ${pd.quantity}
+        <button onclick="deleteProduct('${pd._id}')""> Delete </button>
+        `;
         container.appendChild(p);
       })
     })
     }
 
     loadProducts();
+
+    const deleteProduct = (id) => {
+      fetch(`/delete/$(id)`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log('Deleted Successfully')
+      })
+    }
   </script>
 </body>
 </html>

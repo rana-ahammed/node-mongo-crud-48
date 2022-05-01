@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
 // const password = 's1rd1rp1r1r';
 
 
@@ -10,6 +11,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 
 app.get('/', (req, res) => {
@@ -39,6 +41,13 @@ client.connect(err => {
       .then(result => {
         console.log('data added successfully');
         res.send('success');
+      })
+    })
+
+    app.delete('/delete/:id', (req, res) => {
+      productCollection.deleteOne({_id: ObjectId.valueOf(req.params.id)})
+      .then(result => {
+        console.log(result);
       })
     })
   
