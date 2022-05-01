@@ -26,7 +26,11 @@ client.connect(err => {
   const productCollection = client.db("organicDb").collection("products");
     app.post('/addProducts', (req, res) => {
       const product = req.body;
-      console.log(product);
+      productCollection.insertOne(product)
+      .then(result => {
+        console.log('data added successfully');
+        res.send('success');
+      })
     })
   
 });
